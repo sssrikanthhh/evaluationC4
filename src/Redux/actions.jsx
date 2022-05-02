@@ -1,6 +1,7 @@
 import axios from 'axios';
 // action types
 export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
 // Action Creators
 export const userLogin = userData => {
 	return {
@@ -9,8 +10,14 @@ export const userLogin = userData => {
 	};
 };
 
-export const validateUser = payload => dispatch => {
-	const { data } = axios('http://localhost:8080/users');
+export const userLogout = () => {
+	return {
+		type: LOGOUT,
+	};
+};
+
+export const validateUser = payload => async dispatch => {
+	const { data } = await axios('http://localhost:8080/users');
 	let reqUser = data.filter(user => {
 		if (user.username === payload.username && user.pass === payload.password) {
 			return user;

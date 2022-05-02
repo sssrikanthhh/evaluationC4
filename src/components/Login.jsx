@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { userLogin } from '../Redux/actions';
 
 export const Login = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const [loginData, setLoginData] = useState();
 	const user = useSelector(store => store.user);
 
@@ -18,6 +20,11 @@ export const Login = () => {
 
 	const handleSubmit = () => {
 		dispatch(userLogin(loginData));
+		if (user.role === 'admin') {
+			navigate('/orders');
+		} else {
+			navigate('/neworder');
+		}
 	};
 	return (
 		<div>
